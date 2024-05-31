@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   From.hpp                                           :+:      :+:    :+:   */
+/*   Form.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 11:09:29 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/19 11:12:40 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/05/30 11:29:43 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,29 @@ private:
     const int gradeRequiredToExecute;
 
 public:
+
+    
+    // orthodox canonical form
+
+    Form();
+
+    Form(const char* name, int gradeRequiredToSign, int gradeRequiredToExecute);
+
+    Form(const Form& copy);
+
+    Form& operator=(const Form& copy);
+
+    ~Form();
+    
     // Exception classes
     class GradeTooHighException : public std::exception {
     public:
-        virtual const char* what() const throw();
+        const char* what() const throw();
     };
 
     class GradeTooLowException : public std::exception {
     public:
-        virtual const char* what() const throw();
+        const char* what() const throw();
     };
 
     // Constructor

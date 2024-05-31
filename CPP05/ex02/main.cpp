@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 14:31:41 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/19 14:31:43 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:23:51 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,48 @@
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
 
-int main() {
+int main(void) {
+    Bureaucrat a("Bob", 1);
+    Bureaucrat b("Alice", 150);
+    Bureaucrat c("Charlie", 20);
+
+    ShrubberyCreationForm shrubbery;
+    RobotomyRequestForm robotomy("home");
+    PresidentialPardonForm pardon("home");
+
+    // std::cout << a << std::endl;
+    // std::cout << b << std::endl;
+    // std::cout << c << std::endl;
+
+    // std::cout << shrubbery << std::endl;
+    // std::cout << robotomy << std::endl;
+    // std::cout << pardon << std::endl;
+
     try {
-        Bureaucrat b1("Alice", 1);
-        ShrubberyCreationForm f1("home");
-        RobotomyRequestForm f2("robot");
-        PresidentialPardonForm f3("criminal");
+        a.signAForm(shrubbery);
+        a.executeForm(shrubbery);
+        shrubbery.execute(a);
+    }
+    catch (std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
+    
+    try {
+        b.signAForm(robotomy);
+        b.executeForm(robotomy);
+        robotomy.execute(b);
+    }
+    catch (std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
 
-        std::cout << b1 << std::endl;
-        std::cout << f1 << std::endl;
-        std::cout << f2 << std::endl;
-        std::cout << f3 << std::endl;
-
-        b1.signForm(f1);
-        b1.signForm(f2);
-        b1.signForm(f3);
-
-        b1.executeForm(f1);
-        b1.executeForm(f2);
-        b1.executeForm(f3);
-
-        std::cout << f1 << std::endl;
-        std::cout << f2 << std::endl;
-        std::cout << f3 << std::endl;
-    } catch (std::exception& e) {
-        std::cout << e.what() << std::endl;
+    try {
+        c.signAForm(pardon);
+        c.executeForm(pardon);
+        pardon.execute(c);
+    }
+    catch (std::exception& e) {
+        std::cerr << e.what() << std::endl;
     }
 
     return 0;

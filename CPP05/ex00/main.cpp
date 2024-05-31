@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 09:36:06 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/20 11:33:32 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/05/30 11:10:21 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int main() {
     try {
-        Bureaucrat b1(NULL, 2);
+        Bureaucrat b1("Jhon", 2);
         std::cout << b1 << std::endl;
         b1.incrementGrade();
         std::cout << b1 << std::endl;

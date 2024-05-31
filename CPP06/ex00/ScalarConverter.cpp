@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:29:32 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/20 12:36:54 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/05/26 22:05:42 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ ScalarConverter::~ScalarConverter() {
 }
 
 void ScalarConverter::convert(const std::string& literal) {
-    if (isChar(literal)) {
-        convertFromChar(literal);
-    } else if (isInt(literal)) {
-        convertFromInt(literal);
-    } else if (isFloat(literal)) {
-        convertFromFloat(literal);
-    } else if (isDouble(literal)) {
-        convertFromDouble(literal);
+    ScalarConverter sc;
+    if (sc.isChar(literal)) {
+        sc.convertFromChar(literal);
+    } else if (sc.isInt(literal)) {
+        sc.convertFromInt(literal);
+    } else if (sc.isFloat(literal)) {
+        sc.convertFromFloat(literal);
+    } else if (sc.isDouble(literal)) {
+        sc.convertFromDouble(literal);
     } else {
         std::cout << "char: impossible" << std::endl;
         std::cout << "int: impossible" << std::endl;
@@ -51,15 +52,24 @@ void ScalarConverter::convert(const std::string& literal) {
 }
 
 bool ScalarConverter::isChar(const std::string& literal) {
-    return literal.length() == 1 && std::isprint(literal[0]) && !std::isdigit(literal[0]);
+    if (literal.length() == 1 && std::isprint(literal[0]) && !std::isdigit(literal[0]))
+        return true;
+    return false;
 }
 
 bool ScalarConverter::isInt(const std::string& literal) {
-    char* end;
-    long val = std::strtol(literal.c_str(), &end, 10);
-    return *end == '\0' && val >= std::numeric_limits<int>::min() && val <= std::numeric_limits<int>::max();
+    if (std::isdigit(literal[0]) || literal[0] == '-' || literal[0] == '+') {
+        for (size_t i = 1; i < literal.length(); i++) {
+            if (!std::isdigit(literal[i]))
+                return false;
+        }
+    }
+      return true;  
 }
 
+    // char* end;
+    // long val = std::strtol(literal.c_str(), &end, 10);
+    // return *end == '\0' && val >= std::numeric_limits<int>::min() && val <= std::numeric_limits<int>::max();
 bool ScalarConverter::isFloat(const std::string& literal) {
     if (literal == "-inff" || literal == "+inff" || literal == "nanf") {
         return true;
@@ -94,8 +104,8 @@ void ScalarConverter::convertFromInt(const std::string& literal) {
         std::cout << "char: Non displayable" << std::endl;
     }
     std::cout << "int: " << i << std::endl;
-    std::cout << "float: " << static_cast<float>(i) << ".0f" << std::endl;
-    std::cout << "double: " << static_cast<double>(i) << ".0" << std::endl;
+    std::cout << "float: " << static_cast<float>(i) << std::endl;
+    std::cout << "double: " << static_cast<double>(i)  << std::endl;
 }
 
 void ScalarConverter::convertFromFloat(const std::string& literal) {
@@ -110,8 +120,8 @@ void ScalarConverter::convertFromFloat(const std::string& literal) {
     } else {
         std::cout << "int: " << static_cast<int>(f) << std::endl;
     }
-    std::cout << "float: " << f << "f" << std::endl;
-    std::cout << "double: " << static_cast<double>(f) << std::endl;
+    std::cout << "float: " << f << ".0f" << std::endl;
+    std::cout << "double: " << static_cast<double>(f) << ".0" << std::endl;
 }
 
 void ScalarConverter::convertFromDouble(const std::string& literal) {

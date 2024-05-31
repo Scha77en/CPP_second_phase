@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 10:20:59 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/20 11:35:29 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/05/30 09:52:20 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,28 @@ private:
     int grade;
 
 public:
+    // orthodox canonical form
+
+    Bureaucrat();
+
+    Bureaucrat(const char* name, int grade);
+
+    Bureaucrat(const Bureaucrat& copy);
+
+    Bureaucrat& operator=(const Bureaucrat& copy);
+
+    ~Bureaucrat();
+
     // Exception classes
     class GradeTooHighException : public std::exception {
     public:
-        virtual const char* what() const throw() {
-            return "Grade is too high!";
-        }
+        const char* what() const throw();
     };
 
     class GradeTooLowException : public std::exception {
     public:
-        virtual const char* what() const throw() {
-            return "Grade is too low!";
-        }
+        const char* what() const throw();
     };
-
-    // Constructor
-    Bureaucrat(const char* name, int grade);
 
     // Getters
     const std::string& getName() const ;

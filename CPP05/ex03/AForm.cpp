@@ -5,12 +5,40 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/19 14:08:45 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/19 14:08:48 by aouhbi           ###   ########.fr       */
+/*   Created: 2024/05/19 11:15:15 by aouhbi            #+#    #+#             */
+/*   Updated: 2024/05/30 15:52:27 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AForm.hpp"
+
+AForm::AForm() : name("Default"), isSigned(false), gradeRequiredToSign(150), gradeRequiredToExecute(150) {}
+
+AForm::AForm(const char* name, int gradeRequiredToSign, int gradeRequiredToExecute)
+    : name(name), isSigned(false), gradeRequiredToSign(gradeRequiredToSign), gradeRequiredToExecute(gradeRequiredToExecute) {
+    if (gradeRequiredToSign < 1 || gradeRequiredToExecute < 1) {
+        throw GradeTooHighException();
+    }
+    if (gradeRequiredToSign > 150 || gradeRequiredToExecute > 150) {
+        throw GradeTooLowException();
+    }
+}
+
+AForm::~AForm() {}
+
+AForm::AForm(const AForm& copy) : name(copy.name),
+                            isSigned(copy.isSigned),
+                            gradeRequiredToSign(copy.gradeRequiredToSign),
+                            gradeRequiredToExecute(copy.gradeRequiredToExecute)
+{}
+
+AForm& AForm::operator=(const AForm& copy) {
+    if (this == &copy) {
+        return *this;
+    }
+    this->isSigned = copy.isSigned;
+    return *this;
+}
 
 // Implementation of exception what() methods
 const char* AForm::GradeTooHighException::what() const throw() {
@@ -36,9 +64,6 @@ AForm::AForm(const std::string& name, int gradeRequiredToSign, int gradeRequired
     }
 }
 
-// Implementation of AForm destructor
-AForm::~AForm() {}
-
 // Implementation of getters
 const std::string& AForm::getName() const {
     return name;
@@ -60,13 +85,27 @@ int AForm::getGradeRequiredToExecute() const {
 void AForm::beSigned(const Bureaucrat& b) {
     if (b.getGrade() > gradeRequiredToSign) {
         throw GradeTooLowException();
+        return;
     }
     isSigned = true;
 }
 
+bool AForm::executeAction(const Bureaucrat& executor) const {
+    bool state = true;
+    if (!isSigned) {
+        throw FormNotSignedException();
+        state = false;
+    }
+    if (executor.getGrade() > gradeRequiredToExecute) {
+        throw GradeTooLowException();
+        state = false;
+    }
+    return state;
+}
+
 // Implementation of the insertion (<<) operator
 std::ostream& operator<<(std::ostream& os, const AForm& f) {
-    os << "Form " << f.getName() << ", signed: " << (f.getIsSigned() ? "yes" : "no")
+    os << "AForm " << f.getName() << ", signed: " << (f.getIsSigned() ? "yes" : "no")
        << ", grade required to sign: " << f.getGradeRequiredToSign()
        << ", grade required to execute: " << f.getGradeRequiredToExecute();
     return os;

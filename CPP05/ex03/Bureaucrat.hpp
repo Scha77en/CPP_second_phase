@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 10:20:59 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/19 14:28:19 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/05/30 13:26:49 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,28 @@ private:
     int grade;
 
 public:
+    // orthodox canonical form
+
+    Bureaucrat();
+
+    Bureaucrat(const char* name, int grade);
+
+    Bureaucrat(const Bureaucrat& copy);
+
+    Bureaucrat& operator=(const Bureaucrat& copy);
+
+    ~Bureaucrat();
+
     // Exception classes
     class GradeTooHighException : public std::exception {
     public:
-        virtual const char* what() const throw() {
-            return "Grade is too high!";
-        }
+        const char* what() const throw();
     };
 
     class GradeTooLowException : public std::exception {
     public:
-        virtual const char* what() const throw() {
-            return "Grade is too low!";
-        }
+        const char* what() const throw();
     };
-
-    // Constructor
-    Bureaucrat(const std::string& name, int grade);
 
     // Getters
     const std::string& getName() const ;
@@ -53,8 +58,8 @@ public:
 
     void decrementGrade();
 
-    // Sign form function
-    void signForm(AForm& f) const;
+    // Sign Aform function
+    void signAForm(AForm& f) const;
 
     // Execute form function
     void executeForm(AForm const & form) const;

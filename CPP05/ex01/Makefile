@@ -6,11 +6,11 @@
 #    By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 13:50:26 by aouhbi            #+#    #+#              #
-#    Updated: 2024/05/30 10:43:47 by aouhbi           ###   ########.fr        #
+#    Updated: 2024/05/30 11:09:31 by aouhbi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = bureaucrat
+NAME = bureaucratform
 CPP = c++
 
 RED = \033[0;31m
@@ -19,8 +19,8 @@ RESET = \033[0m
 
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
-HEAD = Bureaucrat.hpp
-SRC = main.cpp Bureaucrat.cpp
+HEAD = Bureaucrat.hpp Form.hpp
+SRC = main.cpp Bureaucrat.cpp Form.cpp
 OBJECTS = $(patsubst %.cpp,%.o,$(SRC))
 
 all: $(NAME)

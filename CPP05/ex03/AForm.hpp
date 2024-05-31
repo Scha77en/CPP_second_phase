@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/19 14:08:16 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/19 14:08:19 by aouhbi           ###   ########.fr       */
+/*   Created: 2024/05/19 11:09:29 by aouhbi            #+#    #+#             */
+/*   Updated: 2024/05/31 15:48:26 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,37 @@ private:
     const int gradeRequiredToExecute;
 
 public:
+
+    // orthodox canonical form
+
+    AForm();
+
+    AForm(const char* name, int gradeRequiredToSign, int gradeRequiredToExecute);
+
+    AForm(const AForm& copy);
+
+    AForm& operator=(const AForm& copy);
+
+    virtual ~AForm();
+    
     // Exception classes
     class GradeTooHighException : public std::exception {
     public:
-        virtual const char* what() const throw();
+        const char* what() const throw();
     };
 
     class GradeTooLowException : public std::exception {
     public:
-        virtual const char* what() const throw();
+        const char* what() const throw();
     };
 
     class FormNotSignedException : public std::exception {
     public:
-        virtual const char* what() const throw();
+        const char* what() const throw();
     };
 
     // Constructor
     AForm(const std::string& name, int gradeRequiredToSign, int gradeRequiredToExecute);
-
-    // Destructor
-    virtual ~AForm();
 
     // Getters
     const std::string& getName() const;
@@ -55,11 +65,13 @@ public:
     int getGradeRequiredToExecute() const;
 
     // Member function
-    void beSigned(const Bureaucrat& b);
-    virtual void execute(Bureaucrat const & executor) const = 0;
+    void    beSigned(const Bureaucrat& b);
+    virtual void    execute(Bureaucrat const & executor) const = 0;
 
-    // Overload of the insertion (<<) operator
-    friend std::ostream& operator<<(std::ostream& os, const AForm& f);
+    bool executeAction(const Bureaucrat& executor) const;
 };
 
-#endif // AFORM_HPP
+// Overload of the insertion (<<) operator
+std::ostream& operator<<(std::ostream& os, const AForm& f);
+
+#endif

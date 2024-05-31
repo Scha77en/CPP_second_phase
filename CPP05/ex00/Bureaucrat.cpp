@@ -6,25 +6,48 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:49:46 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/20 11:35:58 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/05/30 10:51:27 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "Bureaucrat.hpp"
 
-// Implementation of Bureaucrat constructor
+// Implementation of Bureaucrat constructors
+
+Bureaucrat::Bureaucrat() : name("Default"), grade(150) {}
+
 Bureaucrat::Bureaucrat(const char* name, int grade) : grade(grade) {
-    if (name == NULL) {
-        throw std::invalid_argument("Name cannot be NULL!");
-    }
-    name = name;
+    if (name == NULL)
+        this->name = "Default";
+    else
+        this->name = name;
     if (grade < 1) {
         throw GradeTooHighException();
     }
     if (grade > 150) {
         throw GradeTooLowException();
     }
+}
+
+Bureaucrat::Bureaucrat(const Bureaucrat &copy) : name(copy.name), grade(copy.grade) {}
+
+Bureaucrat &Bureaucrat::operator=(const Bureaucrat &copy) {
+    if (this == &copy) {
+        return *this;
+    }
+    this->name = copy.name;
+    this->grade = copy.grade;
+    return *this;
+}
+
+// Implementation of the methods of the Exception classes
+const char* Bureaucrat::GradeTooHighException::what() const throw() {
+    return "Grade is too high!";
+}
+
+const char* Bureaucrat::GradeTooLowException::what() const throw() {
+    return "Grade is too low!";
 }
 
 // Overload of the insertion (<<) operator
@@ -56,3 +79,5 @@ const std::string &Bureaucrat::getName() const {
 int Bureaucrat::getGrade() const {
     return grade;
 }
+
+Bureaucrat::~Bureaucrat() {}
