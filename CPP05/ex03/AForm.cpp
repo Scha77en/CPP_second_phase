@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 11:15:15 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/30 15:52:27 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/06/02 15:50:58 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,13 @@ void AForm::beSigned(const Bureaucrat& b) {
     isSigned = true;
 }
 
-bool AForm::executeAction(const Bureaucrat& executor) const {
-    bool state = true;
+void AForm::executeAction(const Bureaucrat& executor) const {
     if (!isSigned) {
         throw FormNotSignedException();
-        state = false;
     }
     if (executor.getGrade() > gradeRequiredToExecute) {
         throw GradeTooLowException();
-        state = false;
     }
-    return state;
 }
 
 // Implementation of the insertion (<<) operator

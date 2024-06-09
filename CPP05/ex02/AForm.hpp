@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 11:09:29 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/30 15:52:16 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/06/02 15:59:16 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ public:
     void    beSigned(const Bureaucrat& b);
     virtual void    execute(Bureaucrat const & executor) const = 0;
 
-    bool executeAction(const Bureaucrat& executor) const;
+    void executeAction(const Bureaucrat& executor) const;
 };
 
 // Overload of the insertion (<<) operator

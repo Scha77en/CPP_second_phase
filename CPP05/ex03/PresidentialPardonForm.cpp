@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 14:27:38 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/30 17:38:51 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/06/02 15:58:59 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,11 @@ PresidentialPardonForm::~PresidentialPardonForm() {}
 
 void PresidentialPardonForm::execute(Bureaucrat const & executor) const {
     try {
-        bool state = executeAction(executor);
-        if (state == true)
-            std::cout << target << " has been pardoned by Zaphod Beeblebrox." << std::endl;
-        else
-            throw std::runtime_error("Presidential Pardon failed.");
+        executeAction(executor);
+        std::cout << target << " has been pardoned by Zaphod Beeblebrox." << std::endl;
     }
     catch (std::exception& e) {
+        std::cerr << target << " Presidential Pardon failed." << std::endl;
         std::cerr << executor.getName() << " couldn’t execute " << getName() << " because " << e.what() << std::endl;
     }
 }

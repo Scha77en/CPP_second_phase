@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 20:25:24 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/31 20:26:03 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/06/07 13:09:18 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,3 +19,5 @@ public:
 };
 
 #endif
+
+// why you should have at least one virtual function in a base class in order to use dynamic_cast?

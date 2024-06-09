@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 14:11:20 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/31 13:39:40 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/06/02 15:58:21 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,28 @@ ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationF
 }
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
-
 void ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
     try {
-        bool state = executeAction(executor);
-        if (state == true) {
-            std::string filename = target + "_shrubbery";
-            std::ofstream file(filename);
-            if (!file.is_open())
-                throw std::runtime_error("Failed to open file.");
-            file << "       _-_" << std::endl;
-            file << "    /~~   ~~\\" << std::endl;
-            file << " /~~         ~~\\" << std::endl;
-            file << "{               }" << std::endl;
-            file << " \\  _-     -_  /" << std::endl;
-            file << "   ~  \\ //  ~" << std::endl;
-            file << "_- -   | | _- _" << std::endl;
-            file << "  _ -  | |   -_" << std::endl;
-            file << "      // \\" << std::endl;
-            file.close();
-            if (file.fail())
-                throw std::runtime_error("Error writing to file.");
-        }
-        else
-            throw std::runtime_error("Shrubbery Creation failed.");
+        executeAction(executor);
+        std::string filename = target + "_shrubbery";
+        std::ofstream file(filename);
+        if (!file.is_open())
+            throw std::runtime_error("Failed to open file.");
+        file << "       _-_" << std::endl;
+        file << "    /~~   ~~\\" << std::endl;
+        file << " /~~         ~~\\" << std::endl;
+        file << "{               }" << std::endl;
+        file << " \\  _-     -_  /" << std::endl;
+        file << "   ~  \\ //  ~" << std::endl;
+        file << "_- -   | | _- _" << std::endl;
+        file << "  _ -  | |   -_" << std::endl;
+        file << "      // \\" << std::endl;
+        file.close();
+        if (file.fail())
+            throw std::runtime_error("Error writing to file.");
     }
    catch (std::exception& e) {
+        std::cerr << target << " Shrubbery Creation failed." << std::endl;
         std::cerr << executor.getName() << " couldn’t execute " << getName() << " because " << e.what() << std::endl;
     }
 }

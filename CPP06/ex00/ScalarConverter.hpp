@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 12:28:45 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/25 16:17:46 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/06/07 13:26:35 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ public:
     static void convert(const std::string& literal);
 
 private:
-    bool is_dot = false;
     ScalarConverter();
     ScalarConverter(const ScalarConverter& other);
     ScalarConverter& operator=(const ScalarConverter& other);

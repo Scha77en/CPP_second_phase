@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 14:26:02 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/05/30 17:38:27 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/06/02 15:58:41 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,14 @@ RobotomyRequestForm::~RobotomyRequestForm() {}
 
 void RobotomyRequestForm::execute(Bureaucrat const & executor) const {
     try {
-        bool state = executeAction(executor);
-        if (state == true) {
-            std::cout << "Drilling Noises..." << std::endl;
-            std::srand(time(0));
-            if (rand() % 2 == 0) {
-                std::cout << target << " has been robotomized successfully." << std::endl;
-            } else {
-                throw std::runtime_error("Robotomization failed.");
-            }
-        }
+        executeAction(executor);
+        std::cout << "Drilling Noises..." << std::endl;
+        std::srand(time(0));
+        if (rand() % 2 == 0)
+            std::cout << target << " has been robotomized successfully." << std::endl;
     }
     catch (std::exception& e) {
+        std::cerr << target << " Robotomization failed." << std::endl;
         std::cerr << executor.getName() << " couldn’t execute " << getName() << " because " << e.what() << std::endl;
     }
 }
