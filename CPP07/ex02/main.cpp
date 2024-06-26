@@ -1,53 +1,42 @@
 #include <iostream>
 #include "Array.hpp"
 
-#define MAX_VAL 750
-int main(int, char**)
-{
-    Array<int> numbers(MAX_VAL);
-    int* mirror = new int[MAX_VAL];
-    srand(time(NULL));
-    for (int i = 0; i < MAX_VAL; i++)
-    {
-        const int value = rand();
-        numbers[i] = value;
-        mirror[i] = value;
-    }
-    //SCOPE
-    {
-        Array<int> tmp = numbers;
-        Array<int> test(tmp);
+int main() {
+    // Create an array with 5 elements
+    Array<int> array1(5);
+    for (size_t i = 0; i < array1.size(); ++i) {
+        array1[i] = i + 1;
     }
 
-    for (int i = 0; i < MAX_VAL; i++)
-    {
-        if (mirror[i] != numbers[i])
-        {
-            std::cerr << "didn't save the same value!!" << std::endl;
-            return 1;
-        }
+    // Create a copy of array1
+    Array<int> array2(array1);
+
+    // Modify the original array
+    array1[0] = 42;
+
+    // Display elements of both arrays
+    std::cout << "array1: ";
+    for (size_t i = 0; i < array1.size(); ++i) {
+        std::cout << array1[i] << " ";
     }
-    try
-    {
-        numbers[-2] = 0;
+    std::cout << std::endl;
+
+    std::cout << "array2: ";
+    for (size_t i = 0; i < array2.size(); ++i) {
+        std::cout << array2[i] << " ";
     }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
+    std::cout << std::endl;
+
+    try {
+        std::cout << array1[10] << std::endl;
+    } catch (std::exception &e) {
+        std::cerr << e.what() << std::endl;
     }
-    try
-    {
-        numbers[MAX_VAL] = 0;
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
+    try {
+        std::cout << array2[-1] << std::endl;
+    } catch (std::exception &e) {
+        std::cerr << e.what() << std::endl;
     }
 
-    for (int i = 0; i < MAX_VAL; i++)
-    {
-        numbers[i] = rand();
-    }
-    delete [] mirror;//
     return 0;
 }
