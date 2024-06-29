@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 14:48:57 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/06/26 14:49:16 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/06/28 15:18:51 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,14 @@
 #include <algorithm>
 #include <stdexcept>
 
-
-
-template<typename T>
-typename T::iterator easyfind(T &container, int value) {
-    typename T::iterator it = std::find(container.begin(), container.end(), value);
-    if (it != container.end()) {
+template <typename T>
+typename T::iterator easyfind(T &container, int integer)
+{
+    typename T::iterator it = std::find(container.begin(), container.end(), integer);
+    if (it != container.end())
         return it;
-    } else {
-        throw std::runtime_error("Value not found in container");
-    }
+    else
+        throw std::runtime_error("No matching value was found in the container");
 }
 
 #endif

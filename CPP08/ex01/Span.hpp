@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:59:20 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/06/26 19:22:40 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/06/29 08:04:20 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ class Span {
     		    addNumber(*begin);
     		    ++begin;
 			}
-			// v.insert(v.end(), begin, end);
 		}
 		
 		unsigned int shortestSpan() const;

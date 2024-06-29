@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 21:55:31 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/06/27 14:48:18 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/06/29 08:04:12 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main() {
     mstack.pop();
     std::cout << "Mutant size => " << mstack.size() << std::endl;
     mstack.push(3);
-    mstack.push(5);
+    mstack.push(-15);
     mstack.push(737);
     mstack.push(0);
 
@@ -39,15 +39,12 @@ int main() {
 
     std::cout << "Iterating with const iterator:" << std::endl;
     MutantStack<int>::const_iterator cit = mstack.begin();
-    // MutantStack<int>::const_iterator cite = mstack.end();
 
     while (cit != mstack.end()) {
         std::cout << "[" << *cit << "]" << std::endl;
         ++cit;
     }
-    // for (MutantStack<int>::const_iterator cit = mstack.begin(); cit != mstack.end(); ++cit) {
-    //     std::cout << *cit << std::endl;
-    // }
+
     std::cout << "Iterating with reverse iterator:" << std::endl;
     MutantStack<int>::reverse_iterator rit = mstack.rbegin();
 
@@ -63,14 +60,6 @@ int main() {
         std::cout << "[" << *crit << "]" << std::endl;
         ++crit;
     }
-    // MutantStack<int>::reverse_iterator rit = mstack.rbegin();
-    // for (MutantStack<int>::reverse_iterator rit = mstack.rbegin(); rit != mstack.rend(); ++rit) {
-    //     std::cout << *rit << std::endl;
-    // }
-
-    // for (MutantStack<int>::const_reverse_iterator rit = mstack.rbegin(); rit != mstack.rend(); ++rit) {
-    //     std::cout << *rit << std::endl;
-    // }
 
     std::stack<int> s(mstack);
     return 0;

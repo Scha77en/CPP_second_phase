@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:59:25 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/06/26 19:21:14 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/06/28 16:12:38 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void Span::addNumber(int number) {
 
 unsigned int Span::shortestSpan() const {
     if (v.size() < 2) {
-        throw std::logic_error("Not enough numbers to find a span");
+        throw std::logic_error("Not enough data to calculate span");
     }
     std::vector<int> sortedNumbers = v;
     std::sort(sortedNumbers.begin(), sortedNumbers.end());
