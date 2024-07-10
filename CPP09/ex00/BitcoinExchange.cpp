@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 09:08:07 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/07/05 11:34:08 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/07/10 23:06:40 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,12 @@ bool	Btc::Date_Check(const std::string Date) const {
 	std::string year, month, day;
 	if (std::getline(ss, year, '-') && std::getline(ss, month, '-') && std::getline(ss, day)) {
 		try {
-		int y = std::stoi(year);
-		int m = std::stoi(month);
-		int d = std::stoi(day);
+			int y, m, d;
+			
+			y << year;
+		// int y = std::stoi(year);
+		// int m = std::stoi(month);
+		// int d = std::stoi(day);
 		if (!y || !m || !d)
 			return false;
 		}
