@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 09:08:07 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/07/10 23:06:40 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/07/19 13:06:19 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,18 +108,22 @@ void    Btc::Check_Input(const std::string Input) const {
 bool	Btc::Date_Check(const std::string Date) const {
 	if (Date.size() != 10 || Date[4] != '-' || Date[7] != '-')
 		return false;
+	bool leap;
+	leap = false;
 	std::stringstream ss(Date);
 	std::string year, month, day;
 	if (std::getline(ss, year, '-') && std::getline(ss, month, '-') && std::getline(ss, day)) {
 		try {
-			int y, m, d;
+			// int y, m, d;
 			
-			y << year;
-		// int y = std::stoi(year);
-		// int m = std::stoi(month);
-		// int d = std::stoi(day);
+			// y << year;
+		int y = std::stoi(year);
+		int m = std::stoi(month);
+		int d = std::stoi(day);
 		if (!y || !m || !d)
 			return false;
+		if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0)
+			leap = true;
 		}
 		catch (...) {
 			return false;
