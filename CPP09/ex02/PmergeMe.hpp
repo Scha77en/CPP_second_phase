@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 09:38:31 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/07/23 19:16:10 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/07/27 16:01:15 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ private:
     std::deque<int> deq;
 
     void sortVector();
+    void merge_sort_vector(std::vector<int>& arr);
+    
     void sortDeque();
     void mergeInsertSortVector(std::vector<int>& arr, int left, int right);
     void mergeInsertSortDeque(std::deque<int>& arr, int left, int right);
@@ -34,6 +36,7 @@ private:
     void insertionSortDeque(std::deque<int>& arr, int left, int right);
     void mergeVector(std::vector<int>& arr, int left, int mid, int right);
     void mergeDeque(std::deque<int>& arr, int left, int mid, int right);
+    void print_vector(std::vector<int>& arr);
 
 public:
     PmergeMe();
