@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 09:38:31 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/07/27 16:01:15 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/07/28 19:54:12 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,12 @@ private:
     void insertionSortDeque(std::deque<int>& arr, int left, int right);
     void mergeVector(std::vector<int>& arr, int left, int mid, int right);
     void mergeDeque(std::deque<int>& arr, int left, int mid, int right);
+    
     void print_vector(std::vector<int>& arr);
+    void print_sequence(std::vector<size_t> sequance);
+
+    std::vector<size_t> g_jacobsthalsequence(int n);
+    std::vector<size_t> g_real_sequence(std::vector<size_t> jacobsthal_s, int pend_size);
 
 public:
     PmergeMe();

@@ -6,13 +6,14 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 11:03:38 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/07/27 20:10:48 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/07/28 19:55:05 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 #include <algorithm>
 #include <cstddef>
+#include <utility>
 
 PmergeMe::PmergeMe() {}
 
@@ -41,7 +42,7 @@ void PmergeMe::sort() {
 	
 	start = clock();
 	sortVector();
-	// return ;
+	return ;
 	end = clock();
 	float vecTime = static_cast<float>(end - start) / CLOCKS_PER_SEC * 1000000;
 
@@ -87,6 +88,15 @@ void    PmergeMe::merge_sort_vector(std::vector<int>& arr)
 	std::cout << "-------------------" << std::endl;
 	std::swap(arr[0], arr[1]);
 	print_vector(arr);
+	std::cout << "generating jacobsthalsequence" << std::endl;
+	std::vector<size_t> jacobsthals_s = g_jacobsthalsequence(arr.size() + 2);
+	print_sequence(jacobsthals_s);
+
+
+	std::cout << "generating real jacobsthalsequence" << std::endl;
+	std::vector<size_t> real_sequance = g_real_sequence(jacobsthals_s, 4);
+	print_sequence(real_sequance);
+	
 	size_t size = arr.size();
 	for (size_t i = 3; i < size; i++) {
 		int current = arr[i];
@@ -101,6 +111,50 @@ void    PmergeMe::merge_sort_vector(std::vector<int>& arr)
 	}
 	std::cout << "-------------------" << std::endl;
 	print_vector(arr);
+}
+
+void PmergeMe::print_sequence(std::vector<size_t> sequance) {
+	for (size_t i = 0; i < sequance.size(); i++)
+		std::cout << sequance[i] << " ";
+	std::cout << std::endl;
+}
+
+std::vector<size_t> PmergeMe::g_jacobsthalsequence(int n) {
+	std::vector<size_t> sequence;
+	sequence.push_back(0);
+	sequence.push_back(1);
+	for (int i = 2; i < n; ++i) {
+		sequence.push_back(sequence[i - 1] + 2 * sequence[i - 2]);
+	}
+	for (int j = 0; j < 2; j++) {
+		sequence.erase(sequence.begin());
+	}
+	return sequence;
+}
+
+std::vector<size_t> PmergeMe::g_real_sequence(std::vector<size_t> jacobsthal_s, int pend_size) {
+	std::vector<size_t> real_sequence;
+	size_t i = 1;
+	bool	out_limit = false;
+
+	while (1)
+	{
+		size_t x = jacobsthal_s[i];
+		while (x > (size_t)pend_size) {
+			x--;
+			out_limit = true;
+		}
+		real_sequence.push_back(x);
+		if (out_limit == true)
+			break ;
+		x--;
+		while (std::find(jacobsthal_s.begin(), jacobsthal_s.end(), x) == jacobsthal_s.end()) {
+			real_sequence.push_back(x);
+			x--;
+		}
+		i++;
+	}
+	return real_sequence;
 }
 
 void	PmergeMe::print_vector(std::vector<int>& arr)
