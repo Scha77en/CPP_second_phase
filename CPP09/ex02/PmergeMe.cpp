@@ -6,111 +6,220 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 11:03:38 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/07/28 19:55:05 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/08/17 20:53:35 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 #include <algorithm>
 #include <cstddef>
+#include <random>
 #include <utility>
+#include <vector>
 
 PmergeMe::PmergeMe() {}
 
 PmergeMe::~PmergeMe() {}
 
 void PmergeMe::parseInput(int argc, char** argv) {
+	struggler = -1;
 	for (int i = 1; i < argc; ++i) {
+		for (int j = 0; argv[i][j] != '\0'; j++) {
+			if (argv[i][j] == ' ')
+				throw std::runtime_error("Error: Invalid input");
+		}
 		std::istringstream iss(argv[i]);
 		int num;
-		if (!(iss >> num) || num <= 0) {
+		if (!(iss >> num) || num < 0) {
 			throw std::runtime_error("Error: Invalid input");
 		}
-		vec.push_back(num);
-		deq.push_back(num);
-	}
+		if (i % 2 == 0)
+		{
+			vec_pairs.push_back(std::make_pair(std::stoi(argv[i - 1]), num));
+			deq_pairs.push_back(std::make_pair(std::stoi(argv[i - 1]), num));
+		}
+		else if (i + 1 == argc)
+			struggler = num;
+		}
 }
 
 void PmergeMe::sort() {
 	std::cout << "Before: ";
-	for (size_t i = 0; i < vec.size(); ++i) {
-		std::cout << vec[i] << " ";
-	}
-	std::cout << std::endl;
+	// for (size_t i = 0; i < vec_pairs.size(); ++i) {
+	// 	std::cout << vec_pairs[i].first << " " << vec_pairs[i].second << " ";
+	// }
+	// std::cout << std::endl;
 
-	clock_t start, end;
+	// clock_t start, end;
 	
-	start = clock();
+	// start = clock();
 	sortVector();
 	return ;
-	end = clock();
-	float vecTime = static_cast<float>(end - start) / CLOCKS_PER_SEC * 1000000;
+	// end = clock();
+	// float vecTime = static_cast<float>(end - start) / CLOCKS_PER_SEC * 1000000;
 
-	start = clock();
-	sortDeque();
-	end = clock();
-	float deqTime = static_cast<float>(end - start) / CLOCKS_PER_SEC * 1000000;
+	// start = clock();
+	// sortDeque();
+	// end = clock();
+	// float deqTime = static_cast<float>(end - start) / CLOCKS_PER_SEC * 1000000;
 
-	std::cout << "After: ";
-	for (size_t i = 0; i < vec.size(); ++i) {
-		std::cout << vec[i] << " ";
-	}
-	std::cout << std::endl;
+	// std::cout << "After: ";
+	// for (size_t i = 0; i < vec.size(); ++i) {
+	// 	std::cout << vec[i] << " ";
+	// }
+	// std::cout << std::endl;
 
-	std::cout << "Time to process a range of " << vec.size() << " elements with std::vector : " 
-			  << std::fixed << std::setprecision(5) << vecTime << " us" << std::endl;
-	std::cout << "Time to process a range of " << deq.size() << " elements with std::deque : " 
-			  << std::fixed << std::setprecision(5) << deqTime << " us" << std::endl;
+	// std::cout << "Time to process a range of " << vec.size() << " elements with std::vector : " 
+	// 		  << std::fixed << std::setprecision(5) << vecTime << " us" << std::endl;
+	// std::cout << "Time to process a range of " << deq.size() << " elements with std::deque : " 
+	// 		  << std::fixed << std::setprecision(5) << deqTime << " us" << std::endl;
 }
 
 void PmergeMe::sortVector() {
-	merge_sort_vector(vec);
+	merge_sort_vector(vec_pairs);
 	// mergeInsertSortVector(vec, 0, vec.size() - 1);
 }
 
-void    PmergeMe::merge_sort_vector(std::vector<int>& arr)
-{
-	size_t pairs_size = arr.size() / 2;
+std::vector<std::pair<int, int> > PmergeMe::set_vec_pairs(std::vector<int>& vec) {
+	size_t vec_size = vec.size() / 2;
+	std::vector<std::pair<int, int> > vec_pairs;
 
-	if (pairs_size == 0)
-		return;
-	for (size_t i = 0; i < pairs_size; i++) {
-		if (arr[i * 2] < arr[i * 2 + 1])
-		   std::swap(arr[i * 2], arr[i * 2 + 1]);
+	for (size_t i = 0; i < vec_size; i += 2) {
+		vec_pairs.push_back((std::make_pair(vec[i], vec[i + 1])));
 	}
-	print_vector(arr);
-	for (size_t i = 0; i < pairs_size - 1; i++) {
-		if (arr[i * 2] > arr[i * 2 + 2]) {
-			std::swap(arr[i * 2], arr[i * 2 + 2]);
-			std::swap(arr[i * 2 + 1], arr[i * 2 + 3]);
+	print_vector(vec_pairs);
+	vec.clear();
+	return vec_pairs;
+}
+
+std::deque<std::pair<int, int> > PmergeMe::set_deq_pairs(std::deque<int>& deq) {
+	size_t deq_size = deq.size() / 2;
+	std::deque<std::pair<int, int> > deq_pairs;
+
+	for (size_t i = 0; i < deq_size; i += 2) {
+		deq_pairs.push_back((std::make_pair(deq[i], deq[i + 1])));
+	}
+	deq.clear();
+	return deq_pairs;
+}
+
+void    PmergeMe::merge_sort_vector(std::vector<std::pair<int, int> >& arr)
+{
+	std::vector<int> main_chain;
+	std::vector<int> pend_chain;
+
+	if (arr.size() < 2) {
+		std::sort(arr.begin(), arr.end());
+		std::cout << "---------- main chain ---------" << std::endl;
+		for (size_t i = 0; i < arr.size(); i++) {
+			main_chain.push_back(arr[i].first);
+			main_chain.push_back(arr[i].second);
 		}
+		if (struggler != -1)
+			main_chain.push_back(struggler);
+		std::sort(main_chain.begin(), main_chain.end());
+		for (size_t i = 0; i < main_chain.size(); i++)
+			std::cout << main_chain[i] << " ";
+		std::cout << std::endl;
+		return ;
 	}
+	for (size_t i = 0; i < arr.size(); i++) {
+		if (arr[i].first < arr[i].second)
+			std::swap(arr[i].first, arr[i].second);
+	}
+	std::sort(arr.begin(), arr.end());
 	std::cout << "-------------------" << std::endl;
-	std::swap(arr[0], arr[1]);
+	// print_vector(arr);
+	main_chain.push_back(arr[0].second);
+	main_chain.push_back(arr[0].first);
+	for (size_t i = 1; i < arr.size(); i++) {
+		main_chain.push_back(arr[i].first);
+		pend_chain.push_back(arr[i].second);
+	}
+	
+	size_t pend_size = pend_chain.size() + 1;
+
+	std::cout << "pend size = " << pend_size << std::endl;
+
+	
+	// for (size_t i = 0; i < pairs_size; i++) {
+	// 	if (arr[i * 2] < arr[i * 2 + 1])
+	// 	   std::swap(arr[i * 2], arr[i * 2 + 1]);
+	// }
+	// print_vector(arr);
+	// for (size_t i = 0; i < pairs_size - 1; i++) {
+	// 	if (arr[i * 2] > arr[i * 2 + 2]) {
+	// 		std::swap(arr[i * 2], arr[i * 2 + 2]);
+	// 		std::swap(arr[i * 2 + 1], arr[i * 2 + 3]);
+	// 	}
+	// }
+	std::cout << "-------------------" << std::endl;
+	// std::swap(arr[0], arr[1]);
 	print_vector(arr);
 	std::cout << "generating jacobsthalsequence" << std::endl;
 	std::vector<size_t> jacobsthals_s = g_jacobsthalsequence(arr.size() + 2);
 	print_sequence(jacobsthals_s);
 
-
-	std::cout << "generating real jacobsthalsequence" << std::endl;
-	std::vector<size_t> real_sequance = g_real_sequence(jacobsthals_s, 4);
-	print_sequence(real_sequance);
-	
-	size_t size = arr.size();
-	for (size_t i = 3; i < size; i++) {
-		int current = arr[i];
-		std::cout << "current = " << current << std::endl;
-		std::vector<int>::iterator it = std::lower_bound(arr.begin(), arr.begin() + i, current);
-		if (it != arr.begin() + i) {
-			std::cout << "it = " << *it << std::endl;
-			arr.erase(arr.begin() + i);
-			arr.insert(it, current);
-			i--;
-		}
+	// sroting using jacobsthals sequence
+	for(size_t i = 0; i < pend_size; i++) {
+		
 	}
-	std::cout << "-------------------" << std::endl;
-	print_vector(arr);
+	// std::cout << "generating real sequence" << std::endl;
+	// std::vector<size_t> real_sequance = g_real_sequence(jacobsthals_s, pend_size);
+	// print_sequence(real_sequance);
+	
+	// // size_t size = arr.size();
+	// // for (size_t i = 3; i < size; i++) {
+	// // 	int current = arr[i];
+	// // 	std::cout << "current = " << current << std::endl;
+	// std::cout << "---------- main chain ---------" << std::endl;
+	// for (size_t i = 0; i < main_chain.size(); i++)
+	// 	std::cout << main_chain[i] << " ";
+	// std::cout << std::endl;
+	// std::cout << "--------- pend chain ----------" << std::endl;
+	// for (size_t i = 0; i < pend_chain.size(); i++)
+	// 	std::cout << pend_chain[i] << " ";
+	// std::cout << std::endl;
+	// size_t j = 0;
+	// while (1) {
+	// 	size_t i = 0;
+	// 	while(real_sequance[j] && real_sequance[j] - i >= pend_chain.size())
+	// 		i++;
+	// 	// while(i >= 0 && (real_sequance[i] == 0 || real_sequance[i] > pend_chain.size()))
+    //     // i--;
+   	// 	// if(i < 0) break;
+	// 	std::cout << "pend_chain[real_sequance[j] - i] = " << pend_chain[real_sequance[j] - i] << std::endl;
+	// 	std::cout << "==> real_sequance[j] = " << real_sequance[j] << " ---- " << "i = " << i << std::endl;
+	// 	std::cout << real_sequance[j] << "-" << i << " = " << real_sequance[j] - i << std::endl;
+	// 	std::vector<int>::iterator it = std::lower_bound(main_chain.begin(), main_chain.end(), pend_chain[real_sequance[j] - i]);
+	// 	main_chain.insert(it, pend_chain[real_sequance[j] - i]);
+	// 	pend_chain.erase(pend_chain.begin() + real_sequance[j] - i);
+	// 	if (pend_chain.empty()) {
+			if (struggler != -1) {
+				std::vector<int>::iterator it = std::lower_bound(main_chain.begin(), main_chain.end(), struggler);
+				main_chain.insert(it, struggler);
+			}
+	// 		break ;
+	// 	}
+	// 	// std::cout << "increment [j] = " << j << std::endl;
+	// 	j++;
+	// 	// while (1);
+	// }
+	std::cout << "---------- main chain ---------" << std::endl;
+	for (size_t i = 0; i < main_chain.size(); i++)
+		std::cout << main_chain[i] << " ";
+	std::cout << std::endl;
+	// std::cout << "--------- pend chain ----------" << std::endl;
+	// for (size_t i = 0; i < pend_chain.size(); i++)
+	// 	std::cout << pend_chain[i] << " ";
+	// std::cout << std::endl;
+	// 	if (it != arr.begin() + i) {
+	// 		std::cout << "it = " << *it << std::endl;
+	// 		arr.erase(arr.begin() + i);
+	// 		arr.insert(it, current);
+	// 		i--;
+	// 	}
+	// }
 }
 
 void PmergeMe::print_sequence(std::vector<size_t> sequance) {
@@ -140,11 +249,14 @@ std::vector<size_t> PmergeMe::g_real_sequence(std::vector<size_t> jacobsthal_s, 
 	while (1)
 	{
 		size_t x = jacobsthal_s[i];
+		std::cout << "x = " << x << std::endl;
 		while (x > (size_t)pend_size) {
 			x--;
+		std::cout << "here" << std::endl;
 			out_limit = true;
 		}
-		real_sequence.push_back(x);
+		if (std::find(real_sequence.begin(), real_sequence.end(), x) == real_sequence.end())
+			real_sequence.push_back(x);
 		if (out_limit == true)
 			break ;
 		x--;
@@ -157,16 +269,16 @@ std::vector<size_t> PmergeMe::g_real_sequence(std::vector<size_t> jacobsthal_s, 
 	return real_sequence;
 }
 
-void	PmergeMe::print_vector(std::vector<int>& arr)
+void	PmergeMe::print_vector(std::vector<std::pair<int, int> >& arr)
 {
 	for (size_t i = 0; i < arr.size(); i++)
-		std::cout << arr[i] << " ";
-	std::cout << std::endl;
+		std::cout << arr[i].first << " " << arr[i].second << std::endl;
+	std::cout << "array size = " << arr.size() << std::endl;
 }
 
-void PmergeMe::sortDeque() {
-	mergeInsertSortDeque(deq, 0, deq.size() - 1);
-}
+// void PmergeMe::sortDeque() {
+// 	mergeInsertSortDeque(deq, 0, deq.size() - 1);
+// }
 
 void PmergeMe::mergeInsertSortVector(std::vector<int>& arr, int left, int right) {
 	if (right - left <= 10) {

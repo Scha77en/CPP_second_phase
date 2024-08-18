@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 09:38:31 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/07/28 19:54:12 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/08/11 10:01:53 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,18 @@
 #include <iostream>
 #include <sstream>
 #include <ctime>
+#include <utility>
 #include <iomanip>
 #include <stdexcept>
 
 class PmergeMe {
 private:
-    std::vector<int> vec;
-    std::deque<int> deq;
+    int struggler;
+    std::vector<std::pair<int, int> > vec_pairs;
+    std::deque<std::pair<int, int> > deq_pairs;
 
     void sortVector();
-    void merge_sort_vector(std::vector<int>& arr);
+    void merge_sort_vector(std::vector<std::pair<int, int> >& arr);
     
     void sortDeque();
     void mergeInsertSortVector(std::vector<int>& arr, int left, int right);
@@ -36,8 +38,11 @@ private:
     void insertionSortDeque(std::deque<int>& arr, int left, int right);
     void mergeVector(std::vector<int>& arr, int left, int mid, int right);
     void mergeDeque(std::deque<int>& arr, int left, int mid, int right);
+
+    std::vector<std::pair<int, int> > set_vec_pairs(std::vector<int>& vec);
+    std::deque<std::pair<int, int> > set_deq_pairs(std::deque<int>& deq);
     
-    void print_vector(std::vector<int>& arr);
+    void print_vector(std::vector<std::pair<int, int> >& arr);
     void print_sequence(std::vector<size_t> sequance);
 
     std::vector<size_t> g_jacobsthalsequence(int n);
