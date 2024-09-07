@@ -14,7 +14,7 @@
 #include <set>
 
 int main(int argc, char** argv) {
-    if (argc < 2) {
+    if (argc <= 2) {
         std::cerr << "Error: No input provided" << std::endl;
         return 1;
     }
@@ -25,14 +25,21 @@ int main(int argc, char** argv) {
 
     std::set<int> unique_numbers;
 
+
     for (int i = 1; i < argc; i++) {
-        int num = std::atoi(argv[i]);
-        if(unique_numbers.find(num) != unique_numbers.end()) {
+        std::stringstream ss(argv[i]);
+        int num;
+        if (!(ss >> num) || num < 0) {
+            std::cerr << "Error: Invalid input" << std::endl;
+            return 1;
+        }
+        if (unique_numbers.find(num) != unique_numbers.end()) {
             std::cerr << "Error: Duplicate number found" << std::endl;
             return 1;
         }
         unique_numbers.insert(num);
     }
+
 	std::cout << "Before: ";
     for (int i = 1; i < argc; i++) {
         std::cout << argv[i] << " ";

@@ -14,7 +14,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <ctime>
-#include <random>
+// #include <random>
 #include <utility>
 #include <vector>
 
@@ -36,8 +36,8 @@ void PmergeMe::parseInput(int argc, char** argv) {
 		}
 		if (i % 2 == 0)
 		{
-			vec_pairs.push_back(std::make_pair(std::stoi(argv[i - 1]), num));
-			deq_pairs.push_back(std::make_pair(std::stoi(argv[i - 1]), num));
+			vec_pairs.push_back(std::make_pair(atoi(argv[i - 1]), num));
+			deq_pairs.push_back(std::make_pair(atoi(argv[i - 1]), num));
 		}
 		else if (i + 1 == argc)
 			struggler = num;
@@ -199,6 +199,8 @@ std::vector<size_t> PmergeMe::g_real_sequence(std::vector<size_t> jacobsthal_s, 
 			break;
 		if (out_limit) {
 			x--;
+			if ((ssize_t)x < 0)
+				break;
 			while (find(jacobsthal_s.begin(), jacobsthal_s.end(), x) == jacobsthal_s.end()) {
 				real_sequence.push_back(x);
 				x--;
@@ -213,7 +215,6 @@ std::vector<size_t> PmergeMe::g_real_sequence(std::vector<size_t> jacobsthal_s, 
 				break;
 		}
 		i++;
-		
 	}
 	return real_sequence;
 }
