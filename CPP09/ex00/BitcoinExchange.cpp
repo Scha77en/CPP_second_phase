@@ -23,7 +23,7 @@ Btc::Btc(const std::string DataF) {
 Btc::~Btc() {}
 
 void Btc::loadData(const std::string DataF) {
-	std::ifstream file(DataF);
+	std::ifstream file(DataF.c_str());
 	if (!file.is_open())
 		throw std::runtime_error("Error: could not open file.");
 	int i = -1;
@@ -48,7 +48,7 @@ void Btc::loadData(const std::string DataF) {
 		}
 		if (std::getline(ss, date, ',') && std::getline(ss, value_s)) {
 			// std::cout << "date ==> " << date << std::endl << "value_s ==> " << value_s << std::endl;
-			float value_f = std::stof(value_s);
+			float value_f = std::atof(value_s.c_str());
 			DataBase[date] = value_f;
 		}
 		else 
@@ -58,7 +58,7 @@ void Btc::loadData(const std::string DataF) {
 
 
 void    Btc::Check_Input(const std::string Input) const {
-	std::ifstream file(Input);
+	std::ifstream file(Input.c_str());
 	if (!file.is_open())
 		throw std::runtime_error("Error: couldn't open Input file.");
 	std::string line;
@@ -68,12 +68,17 @@ void    Btc::Check_Input(const std::string Input) const {
 		std::stringstream ss(line);
 		std::string date, pipe, value;
 		if (i == 0) {
-			ss >> date >> pipe >> value;
-			if (date != "date" || pipe != "|" || value != "value") {
-				std::string error = "Error: bad input => " + line;
-				throw std::runtime_error(error);
+			try {
+				ss >> date >> pipe >> value;
+				if (date != "date" || pipe != "|" || value != "value") {
+					std::string error = "Error: bad input => " + line;
+					throw std::runtime_error(error);
+				}
+				i++;
 			}
-			i++;
+			catch (const std::exception &e) {
+				std::cerr << e.what() << std::endl;
+			}
 		}
 		if (std::getline(ss, date, '|') && std::getline(ss, value)) {
 			std::istringstream iss(date);
@@ -82,7 +87,6 @@ void    Btc::Check_Input(const std::string Input) const {
 			std::istringstream iss2(value);
 			iss >> value;
 			// std::cout << CYAN "Value ==> " << value << RESET << std::endl;
-		
 		
 			if (!Date_Check(date)) {
 				std::cerr << "Error: bad input => " << date << std::endl;
@@ -108,8 +112,7 @@ void    Btc::Check_Input(const std::string Input) const {
 bool	Btc::Date_Check(const std::string Date) const {
 	if (Date.size() != 10 || Date[4] != '-' || Date[7] != '-')
 		return false;
-	bool leap;
-	leap = false;
+	// bool leap = false;
 	std::stringstream ss(Date);
 	std::string year, month, day;
 	if (std::getline(ss, year, '-') && std::getline(ss, month, '-') && std::getline(ss, day)) {
@@ -117,13 +120,13 @@ bool	Btc::Date_Check(const std::string Date) const {
 			// int y, m, d;
 			
 			// y << year;
-		int y = std::stoi(year);
-		int m = std::stoi(month);
-		int d = std::stoi(day);
+		int y = atoi(year.c_str());
+		int m = atoi(month.c_str());
+		int d = atoi(day.c_str());
 		if (!y || !m || !d)
 			return false;
-		if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0)
-			leap = true;
+		// if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0)
+			// leap = true;
 		}
 		catch (...) {
 			return false;
@@ -133,7 +136,14 @@ bool	Btc::Date_Check(const std::string Date) const {
 }
 
 float	Btc::Value_Check(const std::string Value) const {
-	float v = std::stof(Value);
+	std::stringstream ss(Value);
+	float v;
+	if (!(ss >> v))
+		throw std::runtime_error("not a number");
+	while (ss.peek() == ' ')
+		ss.ignore();
+	if (ss.peek() != EOF)
+		throw std::runtime_error("not a number or extra data.");
 	if (v < 0)
 		throw std::runtime_error("not a positive number.");
 	if (v > 1000)
