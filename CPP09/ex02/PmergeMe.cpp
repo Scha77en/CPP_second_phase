@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 11:03:38 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/08/23 15:32:49 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/08/25 11:18:39 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,12 +159,6 @@ void    PmergeMe::merge_sort_vector(std::vector<std::pair<int, int> >& arr)
 	std::cout << "-------------------" << std::endl;
 	for (size_t i = 0; i < main_chain.size(); i++)
 		std::cout << main_chain[i] << " ";
-	std::cout << std::endl;
-}
-
-void PmergeMe::print_sequence(std::vector<size_t> sequance) {
-	for (size_t i = 0; i < sequance.size(); i++)
-		std::cout << sequance[i] << " ";
 	std::cout << std::endl;
 }
 

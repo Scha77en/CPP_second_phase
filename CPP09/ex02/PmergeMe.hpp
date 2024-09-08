@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 09:38:31 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/08/23 15:24:26 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/08/25 11:18:42 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ private:
     
     void print_vector(std::vector<std::pair<int, int> >& arr);
     void print_deque(std::deque<std::pair<int, int> >& deq);
-    void print_sequence(std::vector<size_t> sequance);
 
     std::vector<size_t> g_jacobsthalsequence(int n);
     std::vector<size_t> g_real_sequence(std::vector<size_t> jacobsthals_s, size_t size);
