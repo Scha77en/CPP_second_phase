@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 09:08:04 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/07/05 11:18:09 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/09/08 23:01:10 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ class Btc {
 		bool	Date_Check(const std::string Date) const;
 		float	Value_Check(const std::string Value) const;
 		float	Get_Exch_Rate(const std::string date) const;
+
+		void	Check_year(int y) const;
+		void	Check_month(int m) const;
+		void	Check_day(int d, int m, int y) const;
 };
 
 #endif

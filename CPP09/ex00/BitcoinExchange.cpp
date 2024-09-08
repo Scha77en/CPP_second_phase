@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 09:08:07 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/07/19 13:06:19 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/09/08 23:20:06 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void Btc::loadData(const std::string DataF) {
 			DataBase[date] = value_f;
 		}
 		else 
-			throw std::runtime_error("Error: Failed to read line from file.");   
+			throw std::runtime_error("Error: Failed to read line from file."); 
 	}
 }
 
@@ -71,7 +71,7 @@ void    Btc::Check_Input(const std::string Input) const {
 			try {
 				ss >> date >> pipe >> value;
 				if (date != "date" || pipe != "|" || value != "value") {
-					std::string error = "Error: bad input => " + line;
+					std::string error = "Error: bad input => " + line;	
 					throw std::runtime_error(error);
 				}
 				i++;
@@ -80,7 +80,7 @@ void    Btc::Check_Input(const std::string Input) const {
 				std::cerr << e.what() << std::endl;
 			}
 		}
-		if (std::getline(ss, date, '|') && std::getline(ss, value)) {
+		else if (std::getline(ss, date, '|') && std::getline(ss, value)) {
 			std::istringstream iss(date);
 			iss >> date;
 			// std::cout << CYAN "Date ==> " << date << RESET << std::endl;
@@ -88,8 +88,11 @@ void    Btc::Check_Input(const std::string Input) const {
 			iss >> value;
 			// std::cout << CYAN "Value ==> " << value << RESET << std::endl;
 		
-			if (!Date_Check(date)) {
-				std::cerr << "Error: bad input => " << date << std::endl;
+			try {				
+				Date_Check(date);
+			}
+			catch (const std::exception &e) {
+				std::cerr << "Error: " << e.what() << " | bad input => " << date << std::endl;
 				continue;
 			}
 			float value_f = 0;
@@ -112,11 +115,9 @@ void    Btc::Check_Input(const std::string Input) const {
 bool	Btc::Date_Check(const std::string Date) const {
 	if (Date.size() != 10 || Date[4] != '-' || Date[7] != '-')
 		return false;
-	// bool leap = false;
 	std::stringstream ss(Date);
 	std::string year, month, day;
 	if (std::getline(ss, year, '-') && std::getline(ss, month, '-') && std::getline(ss, day)) {
-		try {
 			// int y, m, d;
 			
 			// y << year;
@@ -125,12 +126,11 @@ bool	Btc::Date_Check(const std::string Date) const {
 		int d = atoi(day.c_str());
 		if (!y || !m || !d)
 			return false;
+		Check_year(y);
+		Check_month(m);
+		Check_day(d, m, y);
 		// if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0)
 			// leap = true;
-		}
-		catch (...) {
-			return false;
-		}
 	}
 	return true;
 }
@@ -160,94 +160,27 @@ float Btc::Get_Exch_Rate(const std::string date) const {
 	return it->second;
 }
 
+void Btc::Check_year(int y) const {
+	if (y < 2000 || y > 2024)
+		throw std::runtime_error("year out of range");
+}
 
-// BitcoinExchange::BitcoinExchange(const std::string& dbFile) {
-// 	loadDatabase(dbFile);
-// }
+void Btc::Check_month(int m) const {
+	if (m < 1 || m > 12)
+		throw std::runtime_error("month out of range");
+}
 
-// BitcoinExchange::~BitcoinExchange() {}
-
-// void BitcoinExchange::loadDatabase(const std::string& dbFile) {
-// 	std::ifstream file(dbFile);
-// 	if (!file.is_open()) {
-// 		throw std::runtime_error("Error: could not open Data file.");
-// 	}
-
-// 	std::string line;
-// 	while (std::getline(file, line)) {
-// 		std::istringstream ss(line);
-// 		std::string date, valueStr;
-// 		if (std::getline(ss, date, ',') && std::getline(ss, valueStr)) {
-// 			float value = std::stof(valueStr);
-// 			exchangeRates[date] = value;
-// 		}
-// 	}
-// }
-
-
-// float BitcoinExchange::getExchangeRate(const std::string& date) const {
-// 	auto it = exchangeRates.lower_bound(date);
-// 	if (it == exchangeRates.end() || (it != exchangeRates.begin() && it->first != date)) {
-// 		--it;
-// 	}
-// 	return it->second;
-// }
-
-// void BitcoinExchange::evaluate(const std::string& inputFile) const {
-// 	std::ifstream file(inputFile);
-// 	if (!file.is_open()) {
-// 		std::cerr << "Error: could not open file." << std::endl;
-// 		return;
-// 	}
-
-// 	std::string line;
-// 	while (std::getline(file, line)) {
-// 		std::istringstream ss(line);
-// 		std::string date, valueStr;
-// 		if (std::getline(ss, date, '|') && std::getline(ss, valueStr)) {
-// 			date.erase(date.find_last_not_of(" \n\r\t")+1);
-// 			valueStr.erase(0, valueStr.find_first_not_of(" \n\r\t"));
-
-// 			if (!isValidDate(date)) {
-// 				std::cerr << "Error: bad input => " << date << std::endl;
-// 				continue;
-// 			}
-// 			if (!isValidValue(valueStr)) {
-// 				std::cerr << "Error: not a positive number." << std::endl;
-// 				continue;
-// 			}
-
-// 			float value = std::stof(valueStr);
-// 			if (value > 1000) {
-// 				std::cerr << "Error: too large a number." << std::endl;
-// 				continue;
-// 			}
-
-// 			float rate = getExchangeRate(date);
-// 			std::cout << date << " => " << value << " = " << (value * rate) << std::endl;
-// 		} else {
-// 			std::cerr << "Error: bad input => " << line << std::endl;
-// 		}
-// 	}
-// }
-
-// bool BitcoinExchange::isValidDate(const std::string& date) const {
-// 	// Basic validation for date format YYYY-MM-DD
-// 	if (date.size() != 10 || date[4] != '-' || date[7] != '-') {
-// 		return false;
-// 	}
-// 	return true;
-// }
-
-// bool BitcoinExchange::isValidValue(const std::string& value) const {
-// 	// Check if value is a float or positive integer
-// 	try {
-// 		float val = std::stof(value);
-// 		if (val < 0) {
-// 			return false;
-// 		}
-// 	} catch (...) {
-// 		return false;
-// 	}
-// 	return true;
-// }
+void Btc::Check_day(int d, int m, int y) const {
+	if (d < 1 || d > 31)
+		throw std::runtime_error("day out of range");
+	if (m == 2) {
+		if (d > 28)
+			throw std::runtime_error("day out of range");
+		if (d == 28 && ((y % 4 != 0) || (y % 100 == 0 && y % 400 != 0)))
+			throw std::runtime_error("day out of range");
+	}
+	if (m == 4 || m == 6 || m == 9 || m == 11) {
+		if (d > 30)
+			throw std::runtime_error("day out of range");
+	}
+}
