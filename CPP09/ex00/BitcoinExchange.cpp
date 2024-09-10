@@ -62,25 +62,28 @@ void    Btc::Check_Input(const std::string Input) const {
 	if (!file.is_open())
 		throw std::runtime_error("Error: couldn't open Input file.");
 	std::string line;
-	int i = -1;
-	i++;
+	int i = 0;
 	while (std::getline(file, line)) {
 		std::stringstream ss(line);
 		std::string date, pipe, value;
 		if (i == 0) {
+			i++;
 			try {
 				ss >> date >> pipe >> value;
 				if (date != "date" || pipe != "|" || value != "value") {
-					std::string error = "Error: bad input => " + line;	
+					std::string error = "Error: bad input => " + line + " --> expected: date | value";
 					throw std::runtime_error(error);
 				}
-				i++;
 			}
 			catch (const std::exception &e) {
 				std::cerr << e.what() << std::endl;
 			}
 		}
 		else if (std::getline(ss, date, '|') && std::getline(ss, value)) {
+			// if (date.empty()) {
+			// 	std::cerr << "Error: bad input => " << line << std::endl;
+			// 	continue;
+			// }
 			std::istringstream iss(date);
 			iss >> date;
 			// std::cout << CYAN "Date ==> " << date << RESET << std::endl;
@@ -114,7 +117,7 @@ void    Btc::Check_Input(const std::string Input) const {
 
 bool	Btc::Date_Check(const std::string Date) const {
 	if (Date.size() != 10 || Date[4] != '-' || Date[7] != '-')
-		return false;
+		throw std::runtime_error("bad date format");
 	std::stringstream ss(Date);
 	std::string year, month, day;
 	if (std::getline(ss, year, '-') && std::getline(ss, month, '-') && std::getline(ss, day)) {
