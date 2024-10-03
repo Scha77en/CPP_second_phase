@@ -124,11 +124,14 @@ bool	Btc::Date_Check(const std::string Date) const {
 			// int y, m, d;
 			
 			// y << year;
-		int y = atoi(year.c_str());
-		int m = atoi(month.c_str());
-		int d = atoi(day.c_str());
-		if (!y || !m || !d)
-			return false;
+		ss.clear();
+		ss.str(year);
+		int y, m, d;
+		if (!(ss >> y) || !(ss >> m) || !(ss >> d))
+			throw std::runtime_error("bad date format");
+		std::cout << "y ==> " << y << std::endl;
+		std::cout << "m ==> " << m << std::endl;
+		std::cout << "d ==> " << d << std::endl;
 		Check_year(y);
 		Check_month(m);
 		Check_day(d, m, y);
@@ -164,6 +167,7 @@ float Btc::Get_Exch_Rate(const std::string date) const {
 }
 
 void Btc::Check_year(int y) const {
+	std::cout << "y ==> ****** " << y << std::endl;
 	if (y < 2000 || y > 2024)
 		throw std::runtime_error("year out of range");
 }
