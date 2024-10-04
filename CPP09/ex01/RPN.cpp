@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 10:04:01 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/10/03 21:23:12 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/10/04 20:14:17 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ float RPN::evaluate(const std::string& expression) {
     std::stack<float> stack;
 
     while (iss >> token) {
+        if (token.size() != 1)
+            throw std::runtime_error("numbers must be between 0 and 9 integers");
         if (isnumber(token)) {
             stack.push(std::stoi(token));
         } else if (isOperator(token)) {

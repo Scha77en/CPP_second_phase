@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 09:08:07 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/10/03 04:29:34 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/10/04 20:05:14 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void    Btc::Check_Input(const std::string Input) const {
 			i++;
 			try {
 				ss >> date >> pipe >> value;
-				if (date != "date" || pipe != "|" || value != "value") {
+				if (date != "date" || pipe != "|" || value != "value" || ss.peek() != EOF) {
 					std::string error = "Error: bad input => " + line + " --> expected: date | value";
 					throw std::runtime_error(error);
 				}
@@ -113,6 +113,8 @@ void    Btc::Check_Input(const std::string Input) const {
 			std::cerr << "Error: bad input => " << line << std::endl;
 		}
 	}
+	if (i == 0)
+		throw std::runtime_error("Error: empty file.");
 }
 
 bool	Btc::Date_Check(const std::string Date) const {
@@ -124,15 +126,15 @@ bool	Btc::Date_Check(const std::string Date) const {
 		ss.clear();
 		ss.str(year);
 		int y = 0, m = 0, d = 0;
-		if (!(ss >> y))
+		if (!(ss >> y) || ss.peek() != EOF)
 			throw std::runtime_error("bad number");
 		ss.clear();
 		ss.str(month);
-		if (!(ss >> m))
+		if (!(ss >> m) || ss.peek() != EOF)
 			throw std::runtime_error("bad number");
 		ss.clear();
 		ss.str(day);
-		if (!(ss >> d))
+		if (!(ss >> d) || ss.peek() != EOF)
 			throw std::runtime_error("bad number");
 		Check_year(y);
 		Check_month(m);
@@ -182,9 +184,9 @@ void Btc::Check_day(int d, int m, int y) const {
 	if (d < 1 || d > 31)
 		throw std::runtime_error("day out of range");
 	if (m == 2) {
-		if (d > 28)
+		if (d > 29)
 			throw std::runtime_error("day out of range");
-		if (d == 28 && ((y % 4 != 0) || (y % 100 == 0 && y % 400 != 0)))
+		if (d == 29 && ((y % 4 != 0) || (y % 100 == 0 && y % 400 != 0)))
 			throw std::runtime_error("day out of range");
 	}
 	if (m == 4 || m == 6 || m == 9 || m == 11) {

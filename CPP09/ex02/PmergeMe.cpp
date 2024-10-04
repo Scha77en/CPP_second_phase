@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 11:03:38 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/10/04 05:40:05 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/10/04 07:54:50 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void    PmergeMe::merge_sort_vector(std::vector<std::pair<int, int> >& arr)
 	std::vector<int> main_chain;
 	std::vector<int> pend_chain;
 
-	std::cout << "array size = " << arr.size() << std::endl;
+	// std::cout << "array size = " << arr.size() << std::endl;
 	if (arr.size() == 1) {
 		if (arr[0].first < arr[0].second) {
 			main_chain.push_back(arr[0].first);
@@ -157,42 +157,45 @@ void    PmergeMe::merge_sort_vector(std::vector<std::pair<int, int> >& arr)
 		
 	// }
 	sort_array_v(arr);
-	std::cout << "< 1 >" << std::endl;
 	// main_chain.push_back(arr[0].second);
 	// main_chain.push_back(arr[0].first);
 	for (size_t i = 0; i < arr.size(); i++) {
 		main_chain.push_back(arr[i].first);
 		pend_chain.push_back(arr[i].second);
 	}
-	std::cout << "< 2 >" << std::endl;
 
 	std::vector<size_t> jacobsthals_s = g_jacobsthalsequence(arr.size() + 2);
-	for (size_t i = 0; i < jacobsthals_s.size(); i++)
-		std::cout << jacobsthals_s[i] << " ";
-	std::cout << std::endl;
+	// for (size_t i = 0; i < jacobsthals_s.size(); i++)
+	// 	std::cout << jacobsthals_s[i] << " ";
+	// std::cout << std::endl;
 
 	std::vector<size_t> real_sequance = g_real_sequence(jacobsthals_s, pend_chain.size());
-	std::cout << "real sequence size = " << real_sequance.size() << std::endl;
-	for (size_t i = 0; i < real_sequance.size(); i++)
-		std::cout << real_sequance[i] << " ";
-	std::cout << std::endl;
+	// std::cout << "real sequence size = " << real_sequance.size() << std::endl;
+	// for (size_t i = 0; i < real_sequance.size(); i++)
+	// 	std::cout << real_sequance[i] << " ";
+	// std::cout << std::endl;
 	
 	for (size_t i = 0; i < real_sequance.size(); i++) {
 		std::vector<int>::iterator it = std::lower_bound(main_chain.begin(), main_chain.end(), pend_chain[real_sequance[i]]);
 		main_chain.insert(it, pend_chain[real_sequance[i]]);
 	}
-	std::cout << "< 3 >" << std::endl;
+	// std::cout << "< 3 >" << std::endl;
 	real_sequance.clear();
 	if (struggler != -1)
 		main_chain.insert((std::lower_bound(main_chain.begin(), main_chain.end(), struggler)), struggler);
 	n_size = main_chain.size();
-	std::cout << "main chain size = " << main_chain.size() << std::endl;
-	std::cout << "-------------------" << std::endl;
+	// std::cout << "main chain size = " << main_chain.size() << std::endl;
+	std::cout << "After: ";
 	for (size_t i = 0; i < main_chain.size(); i++)
 		std::cout << main_chain[i] << " ";
 	std::cout << std::endl;
+	// if (is_sorted(main_chain.begin(), main_chain.end()))
+	// 	std::cout << "Sorted" << std::endl;
+	// else
+	// 	std::cout << "Not sorted" << std::endl;
 }
 
+(pow(n,2) - pow(-1,n) / 3) 
 std::vector<size_t> PmergeMe::g_jacobsthalsequence(int n) {
 	std::vector<size_t> sequence;
 	sequence.push_back(0);
@@ -247,7 +250,7 @@ std::vector<size_t> PmergeMe::g_real_sequence(std::vector<size_t> jacobsthal_s, 
 		}
 		
 		while (std::find(real_sequence.begin(), real_sequence.end(), x) == real_sequence.end()) {
-			std::cout << "pushing x = " << x << std::endl;
+			// std::cout << "pushing x = " << x << std::endl;
 			real_sequence.push_back(x);
 			x--;
 			if (x < 0)

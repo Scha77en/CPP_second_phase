@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:16:56 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/10/04 05:42:59 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/10/04 07:53:38 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
 
     std::set<int> unique_numbers;
 
-    std::cout << "arguments number = " << argc - 1 << std::endl;
+    // std::cout << "arguments number = " << argc - 1 << std::endl;
 
     for (int i = 1; i < argc; i++) {
         std::stringstream ss(argv[i]);

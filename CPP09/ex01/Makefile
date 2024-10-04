@@ -6,7 +6,7 @@
 #    By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/06 10:03:49 by aouhbi            #+#    #+#              #
-#    Updated: 2024/07/06 10:06:36 by aouhbi           ###   ########.fr        #
+#    Updated: 2024/10/04 08:11:30 by aouhbi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,5 +33,3 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
-.PHONY: all clean fclean re
