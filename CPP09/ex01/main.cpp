@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 10:03:44 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/07/23 11:14:29 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/10/03 04:45:52 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
     RPN rpn;
 
     try {
-        int result = rpn.evaluate(argv[1]);
+        float result = rpn.evaluate(argv[1]);
         std::cout << result << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;

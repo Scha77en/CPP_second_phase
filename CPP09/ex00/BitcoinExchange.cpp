@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 09:08:07 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/09/08 23:20:06 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/10/03 04:29:34 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,22 +80,29 @@ void    Btc::Check_Input(const std::string Input) const {
 			}
 		}
 		else if (std::getline(ss, date, '|') && std::getline(ss, value)) {
-			// if (date.empty()) {
-			// 	std::cerr << "Error: bad input => " << line << std::endl;
-			// 	continue;
-			// }
 			std::istringstream iss(date);
+			date.clear();
 			iss >> date;
-			// std::cout << CYAN "Date ==> " << date << RESET << std::endl;
+			while (iss.peek() == ' ')
+				iss.ignore();
+			if (iss.peek() != EOF) {
+				std::cerr << "Error: bad input => " << ss.str() << std::endl;
+				continue;
+			}
 			std::istringstream iss2(value);
-			iss >> value;
-			// std::cout << CYAN "Value ==> " << value << RESET << std::endl;
-		
+			value.clear();
+			iss2 >> value;
+			while (iss2.peek() == ' ')
+				iss2.ignore();
+			if (iss2.peek() != EOF) {
+				std::cerr << "Error: bad input => " << ss.str() << std::endl;
+				continue;
+			}
 			try {				
 				Date_Check(date);
 			}
 			catch (const std::exception &e) {
-				std::cerr << "Error: " << e.what() << " | bad input => " << date << std::endl;
+				std::cerr << "Error: " << e.what() << " | bad input => " << ss.str() << std::endl;
 				continue;
 			}
 			float value_f = 0;
@@ -121,22 +128,22 @@ bool	Btc::Date_Check(const std::string Date) const {
 	std::stringstream ss(Date);
 	std::string year, month, day;
 	if (std::getline(ss, year, '-') && std::getline(ss, month, '-') && std::getline(ss, day)) {
-			// int y, m, d;
-			
-			// y << year;
 		ss.clear();
 		ss.str(year);
-		int y, m, d;
-		if (!(ss >> y) || !(ss >> m) || !(ss >> d))
-			throw std::runtime_error("bad date format");
-		std::cout << "y ==> " << y << std::endl;
-		std::cout << "m ==> " << m << std::endl;
-		std::cout << "d ==> " << d << std::endl;
+		int y = 0, m = 0, d = 0;
+		if (!(ss >> y) || ss.peek() != EOF)
+			throw std::runtime_error("bad number");
+		ss.clear();
+		ss.str(month);
+		if (!(ss >> m) || ss.peek() != EOF)
+			throw std::runtime_error("bad number");
+		ss.clear();
+		ss.str(day);
+		if (!(ss >> d) || ss.peek() != EOF)
+			throw std::runtime_error("bad number");
 		Check_year(y);
 		Check_month(m);
 		Check_day(d, m, y);
-		// if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0)
-			// leap = true;
 	}
 	return true;
 }
@@ -150,9 +157,9 @@ float	Btc::Value_Check(const std::string Value) const {
 		ss.ignore();
 	if (ss.peek() != EOF)
 		throw std::runtime_error("not a number or extra data.");
-	if (v < 0)
+	if (v < 0.0f)
 		throw std::runtime_error("not a positive number.");
-	if (v > 1000)
+	if (v > 1000.0f)
 		throw std::runtime_error("too large a number.");
 	return v;
 }
@@ -167,7 +174,6 @@ float Btc::Get_Exch_Rate(const std::string date) const {
 }
 
 void Btc::Check_year(int y) const {
-	std::cout << "y ==> ****** " << y << std::endl;
 	if (y < 2000 || y > 2024)
 		throw std::runtime_error("year out of range");
 }

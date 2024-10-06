@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 09:38:31 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/08/25 11:18:42 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/10/04 04:35:10 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ private:
     size_t                              n_size;
 
     void sortVector();
+    void sortDeque();
     void merge_sort_vector(std::vector<std::pair<int, int> >& arr);
 
-    void sortDeque();
+    void sort_array_v(std::vector<std::pair<int, int> >& arr);
+    void sort_array_d(std::deque<std::pair<int, int> >& arr);
     
     void print_vector(std::vector<std::pair<int, int> >& arr);
     void print_deque(std::deque<std::pair<int, int> >& deq);
