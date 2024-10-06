@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 10:03:53 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/10/03 21:23:29 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/10/06 06:51:07 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,14 @@
 
 #include <string>
 #include <stack>
+#include <cstdlib>
 
 class RPN {
 public:
     RPN();
     ~RPN();
-
     float evaluate(const std::string& expression);
-    bool  isnumber(const std::string& token);
-
 private:
-    bool isOperator(const std::string& token);
     float performOperation(const std::string& token, float a, float b);
 };
 

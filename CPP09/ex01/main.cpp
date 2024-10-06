@@ -6,11 +6,10 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 10:03:44 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/10/03 04:45:52 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/10/04 20:23:46 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// main.cpp
 #include "RPN.hpp"
 #include <iostream>
 #include <stdexcept>
