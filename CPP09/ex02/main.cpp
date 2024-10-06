@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:16:56 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/10/04 07:53:38 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/10/06 05:19:04 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,7 @@ int main(int argc, char** argv) {
     }
 
     PmergeMe sorter;
-
-
     std::set<int> unique_numbers;
-
-    // std::cout << "arguments number = " << argc - 1 << std::endl;
-
     for (int i = 1; i < argc; i++) {
         std::stringstream ss(argv[i]);
         int num;
@@ -40,14 +35,11 @@ int main(int argc, char** argv) {
         unique_numbers.insert(num);
     }
 
-
-    unique_numbers.clear();
-
     try {
         sorter.parseInput(argc, argv);
         std::cout << "Before: ";
         for (int i = 1; i < argc; i++) {
-            std::cout << argv[i] << " ";
+            std::cout << std::atoi(argv[i]) << " ";
         }
         std::cout << std::endl;
         sorter.sort();

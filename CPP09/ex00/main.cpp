@@ -6,16 +6,18 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 09:07:59 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/09/08 22:49:37 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/10/06 05:24:37 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
+#include <type_traits>
+
 
 int main(int argc, char** argv)
 {
 	if (argc != 2) {
-		std::cerr << "Error: could not open file." << std::endl;
+		std::cerr << "Error: no file provided." << std::endl;
 		return 1;
 	}
 	try {
@@ -28,7 +30,3 @@ int main(int argc, char** argv)
 	}
 	return 0;
 }
-
-
-// #include <time.h>
-// std::strptime

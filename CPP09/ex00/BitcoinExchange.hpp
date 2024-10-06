@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 09:08:04 by aouhbi            #+#    #+#             */
-/*   Updated: 2024/09/08 23:01:10 by aouhbi           ###   ########.fr       */
+/*   Updated: 2024/10/06 04:28:39 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ class Btc {
 	public:
 
 		Btc(const std::string DataF);
-		// Btc(const Btc& copy);
-		// Btc &operator=(const Btc& copy);
 		~Btc();
 
 		void	loadData(const std::string DataF);
@@ -42,68 +40,10 @@ class Btc {
 		float	Value_Check(const std::string Value) const;
 		float	Get_Exch_Rate(const std::string date) const;
 
+		// void	Trim(std::string &s);
 		void	Check_year(int y) const;
 		void	Check_month(int m) const;
 		void	Check_day(int d, int m, int y) const;
 };
 
 #endif
-
-// #ifndef BITCOINEXCHANGE_HPP
-// #define BITCOINEXCHANGE_HPP
-
-// #include <iostream>
-// #include <map>
-// #include <string>
-
-// class BitcoinExchange {
-// public:
-//     BitcoinExchange(const std::string& dbFile);
-//     ~BitcoinExchange();
-
-//     float getExchangeRate(const std::string& date) const;
-//     void evaluate(const std::string& inputFile) const;
-
-// private:
-//     void loadDatabase(const std::string& dbFile);
-//     std::map<std::string, float> exchangeRates;
-
-//     bool isValidDate(const std::string& date) const;
-//     bool isValidValue(const std::string& value) const;
-// };
-
-// #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// class BitcoinExchange {
-// 	private:
-// 		unsigned int _amount;
-// 		std::vector<unsigned int> _prices;
-// 		unsigned int _maxProfit;
-// 		unsigned int _buy;
-// 		unsigned int _sell;
-// 		BitcoinExchange();
-// 		void _findMaxProfit();
-// 		void _findBuySell();
-// 	public:
-// 		BitcoinExchange(unsigned int amount, std::vector<unsigned int> prices);
-// 		BitcoinExchange(const BitcoinExchange &copy);
-// 		BitcoinExchange &operator=(const BitcoinExchange &copy);
-// 		~BitcoinExchange();
-// 		void print();
-// };
